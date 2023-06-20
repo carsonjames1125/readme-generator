@@ -147,15 +147,37 @@ const questions = [{
     }
 }]; // end of the questions array 
 
+
+
 // moving on to writing the readme file with the questions from above 
-
-
+// need to write a function that creates the readme file
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+function writeToFile(fileName, data) {
+    fs.writeFile(fileName, data, error => {
+        if (error) {
+            return console.log('Error occured please try again or contact support if this error persists. 999-999-9999. Error:' + error);
+        }
+    })
+} // this allows the apps to take in parameters, and if an error occurs it notifys the users of those errors. 
+
+//this function creates the app
+const createReadMe = util.promisify(writeToFile);
 
 // TODO: Create a function to initialize app
-function init() {}
+async function init() {
+    try {
+        const userInput = await inquirer.prompt(questions);
+        console.log('Thank you for your input, Your ReadMe file will be created shorty using ', userInput);
+        //need to pull markdown now 
+        const markDown = generateMarkdown(userInput);
+        console.log(markDown);
+        await createReadMe('README3.md', markDown);
+
+    } catch (error) {
+        console.log('No file could be created error, ' + error);
+    }
+};
 
 // Function call to initialize app
 init();
