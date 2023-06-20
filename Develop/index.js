@@ -95,7 +95,33 @@ const questions = [{
     message: 'Is there testing available within this application?',
 },
 {
-    type:
+    type: 'input',
+    name: 'testing',
+    message: 'How can your application be tested? Please describe here.',
+    when: ({testConfirm}) => {
+        if (testConfirm) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+},
+{ // license section (with checkbox)
+    type: 'checkbox',
+    name: 'license',
+    message: 'Select a License for your application:',
+    choices: ['Apache License 2.0', 'MIT License', 'GNU General Public License v3.0', 'GNU Affero General Public License v3.0', 'Eclipse Public License 2.0', 'The Unilicense'],
+    validate: nameInput => {
+        if (nameInput) {
+            return true;
+        } else {
+            console.log('Please select a license from the given list.')
+            return false;
+        }
+    }
+},
+{
+    
 }];
 
 // TODO: Create a function to write README file
