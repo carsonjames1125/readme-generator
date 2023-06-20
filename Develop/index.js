@@ -115,14 +115,41 @@ const questions = [{
         if (nameInput) {
             return true;
         } else {
-            console.log('Please select a license from the given list.')
+            console.log('Please select a license from the given list.');
             return false;
         }
     }
 },
-{
-    
-}];
+{ //username section for github
+    type: 'input',
+    name: 'username',
+    message: 'What is your username for GitHub?',
+    validate: nameInput => {
+        if (nameInput) {
+            return true;
+        } else {
+            console.log('Please enter a GitHub username.');
+            return false;
+        }
+    }
+},
+{ // email section
+    type: 'input',
+    name: 'email',
+    message: 'Enter Email address:',
+    validate: nameInput => {
+        if (nameInput) {
+            return true;
+        } else {
+            console.log('Please enter a valid email address.');
+            return false;
+        }
+    }
+}]; // end of the questions array 
+
+// moving on to writing the readme file with the questions from above 
+
+
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {}
