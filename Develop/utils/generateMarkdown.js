@@ -150,4 +150,4 @@ _This application uses ${data.license}._
 // `;
 // }
 
-module.exports = generateMarkdown;
+module.exports = markDown(data);
