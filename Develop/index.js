@@ -2,12 +2,13 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
 const generateMarkdown = require('./utils/generateMarkdown');
-const util = require('util');
 
 // TODO: Create an array of questions for user input
 //need to give the user options to for the different sections of the readme and then add them to the table of contents section
 
-const questions = [{
+const questions = () => {
+    return inquirer.prompt([
+    {
     type: ' input',
     name: 'title',
     message: 'What is the name of your repository?',
@@ -24,7 +25,7 @@ const questions = [{
 { // description section
     type: 'input',
     name: 'description',
-    message: 'How would you descripe this repository? Please answer in a few short sentences.',
+    message: 'How would you describe this repository? Please answer in a few short sentences.',
     validate: nameInput => {
         if (nameInput) {
             return true;
@@ -145,7 +146,9 @@ const questions = [{
             return false;
         }
     }
-}]; // end of the questions array 
+},
+    ]);
+ }; // end of the questions array 
 
 
 
@@ -153,31 +156,59 @@ const questions = [{
 // need to write a function that creates the readme file
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {
-    fs.writeFile(fileName, data, error => {
-        if (error) {
-            return console.log('Error occured please try again or contact support if this error persists. 999-999-9999. Error:' + error);
+
+const writeFile = data =>{
+    fs.writeFile('README.md', data, err => {
+        // if error
+        if (err) {
+            console.log(err);
+            return;
+        } else {
+            console.log('Your README file will be created shortly.')
         }
     })
-} // this allows the apps to take in parameters, and if an error occurs it notifys the users of those errors. 
-
-//this function creates the app
-const createReadMe = util.promisify(writeToFile);
-
-// TODO: Create a function to initialize app
-async function init() {
-    try {
-        const userInput = await inquirer.prompt(questions);
-        console.log('Thank you for your input, Your ReadMe file will be created shorty using ', userInput);
-        //need to pull markdown now 
-        const markDown = generateMarkdown(userInput);
-        console.log(markDown);
-        await createReadMe('README3.md', markDown);
-
-    } catch (error) {
-        console.log('No file could be created error, ' + error);
-    }
 };
 
+
+
+
+// function writeToFile(fileName, data) {
+//     fs.writeFile(fileName, data, error => {
+//         if (error) {
+//             return console.log('Error occured please try again or contact support if this error persists. 999-999-9999. Error:' + error);
+//         }
+//     })
+// } // this allows the apps to take in parameters, and if an error occurs it notifys the users of those errors. 
+
+//this function creates the app
+// const createReadMe = util.promisify(writeToFile);
+
+// TODO: Create a function to initialize app
+
+questions()
+.then(answers => {
+    return generateMarkdown(answers);
+})
+.then(data => {
+    return writeFile(data);
+})
+.catch(err => {
+    console.log(err)
+})
+
+//async function init() {
+//     try {
+//         const userInput = await inquirer.prompt(questions);
+//         console.log('Thank you for your input, Your ReadMe file will be created shorty using ', userInput);
+//         //need to pull markdown now 
+//         const markDown = generateMarkdown(userInput);
+//         console.log(markDown);
+//         await createReadMe('README3.md', markDown);
+
+//     } catch (error) {
+//         console.log('No file could be created error, ' + error);
+//     }
+// };
+
 // Function call to initialize app
-init();
+
