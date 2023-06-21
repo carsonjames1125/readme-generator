@@ -108,10 +108,10 @@ const questions = () => {
     }
 },
 { // license section (with checkbox)
-    type: 'checkbox',
+    type: 'list',
     name: 'license',
     message: 'Select a License for your application:',
-    choices: ['Apache License 2.0', 'MIT License', 'GNU General Public License v3.0', 'GNU Affero General Public License v3.0', 'The Unilicense'],
+    choices: ['Apache License 2.0 (https://choosealicense.com/licenses/apache-2.0/)', 'MIT License (https://choosealicense.com/licenses/mit/)', 'GNU GPL v3.0 (https://choosealicense.com/licenses/agpl-3.0/)','GNU AGPL v3.0 (https://choosealicense.com/licenses/agpl-3.0/)','The Unilicense (https://choosealicense.com/licenses/mit/)'],
     validate: nameInput => {
         if (nameInput) {
             return true;
